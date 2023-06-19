@@ -1,0 +1,26 @@
+FROM ubuntu:20.04
+
+RUN apt-get update
+RUN apt-get install python3 -y
+RUN apt-get install python3-pip -y
+RUN apt-get update && apt-get install cron -y
+RUN apt-get install libpq-dev python-dev -y
+
+WORKDIR /usr/src/app
+
+
+COPY requirements.txt .
+COPY .env .
+COPY load_src_to_target.py .
+
+RUN pip install -r requirements.txt
+COPY items_parsers/ .
+
+ADD magnit_crontab /etc/cron.d/magnit_crontab
+
+RUN chmod 0644 /etc/cron.d/magnit_crontab
+
+RUN crontab /etc/cron.d/magnit_crontab
+
+
+ENTRYPOINT ["cron", "-f"]

@@ -1,0 +1,4 @@
+itemadapter==0.8.0
+psycopg2==2.9.5
+Scrapy==2.8.0
+dotenv==1.0.0
