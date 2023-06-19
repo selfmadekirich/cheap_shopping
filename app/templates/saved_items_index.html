@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% block content %}
+{% if Card_list|length != 0 %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styled_list.css')}}"/>
+<body onload="getLocation()">
+    <div class="columns has-text-left has-text-up is-multiline">
+        {% for card in Card_list %}
+        <div class="column column is-one-third-desktop is-half-tablet is-up is-up" id="{{ card.id }}">
+            <details class="card">
+                <summary class="card-header">
+                    <span class="summary-title"> {{card.name}} </span>
+                    <div class="summary-chevron-up">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-down">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </summary>
+                <div class="column card-body">
+                    <div class="list">
+                        {% for item in card.items %}
+                        <div class="list-item">
+                            <span class="check is-info"></span>
+                            <span class="control-label"> {{ item }}<span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="columns is-mobile">
+                        <div class="column has-text-right is-4">
+                            <form method="post" action="/cards/options">
+                                <input id="geo" type="hidden" value="fuck" hidden="true" name="geo" />
+                                <input id="{{ card.id }}" value="{{ card.id }}" type="hidden" hidden="true"
+                                    name="card_id" />
+                                <button class="button is-0-mobile is-info is-offset-2" onclick="CalculateOptions(this)"
+                                    id="{{ card.id }}">
+                                    Рассчитать стоимость
+                                </button>
+                            </form>
+                        </div>
+                        <div class="column has-text-right">
+                            <button class="button is-0-mobile is-danger is-6" onclick="deleteCard(this)"
+                                id="{{ card.id }}">
+                                Удалить
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="summary-chevron-down">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-chevron-up">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                </div>
+
+            </details>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+{% else %}
+<div class="content is-right">
+    <p>
+        У Вас еще нет сохраненных товаров.
+    </p>
+    <p>
+        Вы всегда можете добавить их при поиске выгодных предложений!
+    </p>
+
+    {% endif %}
+</div>
+<style>
+    #main_container {
+    background-color: white;
+    border-radius: 0px;
+}
+    </style>
+{% if Card_list|length != 0 %}
+
+<script>
+
+    var x = '';
+
+    function deleteCard(event) {
+        $.ajax({
+            url: '/cards',
+            type: 'DELETE',
+            data: { 'removable_id': event.id },
+            success: function (result) {
+                $('div#' + event.id).remove();
+            },
+            fail: function (response) {
+                console.log("Error: Could not contact server.");
+            }
+        });
+    }
+
+    /*
+      function CalculateOptions(event){
+          $.ajax({
+              url: '/cards/options',
+              type: 'POST',
+              data: { 'geo': x.value ,'card_id':event.id}
+          });
+          
+        // console.log(document.getElementById("geo").value);
+      }
+   */
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        }
+    }
+
+    function showPosition(position) {
+        x = position.coords.latitude + ";" + position.coords.longitude;
+        $("form > input#geo").each(function () {
+            var $el = $(this);
+            $el.val(x);
+        });
+    }
+
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                x.innerHTML = "PERMISSION_DENIED"
+                break;
+            case error.POSITION_UNAVAILABLE:
+                x.innerHTML = "POSITION_UNAVAILABLE"
+                break;
+            case error.TIMEOUT:
+                x.innerHTML = "TIMEOUT"
+                break;
+            case error.UNKNOWN_ERROR:
+                x.innerHTML = "UNKNOWN_ERROR"
+                break;
+        }
+    }
+
+</script>
+{% endif %}
+
+{% endblock %}

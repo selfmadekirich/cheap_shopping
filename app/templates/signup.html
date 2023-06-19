@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4" id="login_id">
+    <h3 class="title">Регистрация</h3>
+    <div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}.
+    </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/signup">
+           
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="username" placeholder="Никнейм" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Пароль">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password_rep" placeholder="Повторите пароль">
+                </div>
+            </div>
+            <div class="column is-7 is-offset-3">
+            <button class="button is-block is-info is-large is-fullwidth">Зарегистрироваться</button>
+        </div>
+        </form>
+    </div>
+</div>
+<style>
+    #main_container {
+        background-color: white;
+        border-radius: 0px;
+    }
+
+    #login_id {
+        background-color: rgba(243, 243, 243, 255);
+        border-radius: 35px;
+        padding: 30px;
+    }
+    .button.is-large {
+    font-size: 1.2rem;
+}
+</style>
+{% endblock %}

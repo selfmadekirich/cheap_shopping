@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block content %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styled_list.css')}}"/>
+<div class="columns is-left">
+    <div class="column" id="wrapper">
+        {% for value in items.values() %}
+
+        <div class="column is-5 is-offset-4">
+            <details class="card">
+                <summary class="card-header" >
+                    <span class="summary-title">{{ value['shope_type'] }} - {{ value['total'] }} руб </span>
+                    <div class="summary-chevron-up">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-down">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </summary>
+                <div class="card-body">
+                    <table class="table" id="{{ value['ind'] }}">
+                        <tbody>
+                            <tr>
+                                <th>Адрес:</th>
+                                <td>{{ value['shop_addr'] }}</td>
+                            </tr>
+                            <tr>
+                                <th style="border:none;">Список товаров: </th>
+                                <td style="border:none;" id="goods">
+                                    {{ value['lst'][0] }} </td>
+                            </tr>
+                            {% for v in value['lst'][1:] %}
+                            <tr>
+                                <th style="border:none;"> </th>
+                                <td style="border:none;" id="goods">
+                                    {{ v }} </td>
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                    {% if current_user.is_authenticated and not user_cards %}
+                    <div class="column is-5 is-offset-6">
+                        
+                            <div class="modal" id="modal_{{ value['ind'] }}">
+                                <div class="modal-background"></div>
+                                <div class="modal-card">
+                                    <header class="modal-card-head">
+                                        <p class="modal-card-title">
+                                           Укажите название
+                                        </p>
+                     
+                                        <button class="delete"
+                                            aria-label="close"  onclick="closeModal(this)" id="{{ value['ind'] }}">
+                                        </button>
+                                    </header>
+                                    <section class="modal-card-body">
+                                        <input type="text" id="input_{{ value['ind'] }}"></input>
+                                    </section>
+                                    <footer class="modal-card-foot">
+                                        <button class="button is-danger" onclick="closeModal(this)" id="{{ value['ind'] }}">
+                                            Cancel
+                                        </button>
+                                        <button class="button is-0-mobile is-info is-offset-2 is-target" id="{{ value['ind'] }}" onclick="AddCard(this)">
+                                            Добавить
+                                         </button>
+                                    </footer>
+                                </div>
+                            </div>
+                            <!-- Modal button for trigger -->
+                            <button onclick="openModal(this);"
+                                class="button is-info" id="{{ value['ind'] }}">
+                                Сохранить
+                            </button>
+                     
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="summary-chevron-down">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-chevron-up">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                </div>
+            </details>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<button class="button is-0-mobile is-info">
+    <a href="/items" class="">Вернуться к поисковику</a>
+</button>
+<style>
+    .modal.show {
+  display: block;
+}
+
+.table {
+     background-color: transparent; 
+}
+
+
+    </style>
+<script>
+ function AddCard(event){
+    console.log(event.id);
+    mp = {};
+    lst = [];
+    mp['lst'] = lst;
+   $('.table#'+event.id+' td').each(function(){
+    if(this.id == 'goods'){
+        lst.push($(this).html().trim());
+    }
+   
+   });
+
+   mp['name'] = $('#input_'+event.id).val();
+   //console.log(mp);
+
+   $.post('/cards', {
+                data:JSON.stringify(mp)
+            }).done(function(response) {
+                console.log(response);
+                document.getElementById("modal_"+event.id)
+                .classList.remove("is-active");
+            }).fail(function() {
+                console.log("Error: Could not contact server.");
+            });
+
+ }
+
+function openModal(button) {
+            // Add is-active class on the modal
+            document.getElementById("modal_"+button.id)
+                .classList.add("is-active");
+        }
+        // Function to close the modal
+function closeModal(button) {
+            document.getElementById("modal_"+button.id)
+                .classList.remove("is-active");
+        }
+
+</script>    
+{% endblock %}

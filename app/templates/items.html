@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<body onload="getLocation()">
+ 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="notification is-danger">
+      {{ messages[0] }}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form style="padding: 50px;" method="POST" action="/items">
+      <div class="field has-text-left">
+        <label class="label">Режим:</label>
+        <div class="control  is-mobile">
+          <div class="select">
+            <select name="user_choice">
+              <option>По магазинам</option>
+              <option>Минимальная стоимость</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <p></p>
+      <div class="field has-text-left is-mobile">
+        <label class="label">Список товаров:</label>
+        <div class="control">
+          <textarea class="textarea" name="user_query" placeholder="Каждый товар с новой строки..."></textarea>
+        </div>
+      </div>
+      <input id="geo" type="hidden" hidden="true" name="geo">
+ 
+
+  <button class="button is-0-mobile is-success" disabled id="bttn">Найти товары!</button>
+  </form>
+
+</body>
+<script>
+  var x = document.getElementById("geo");
+   var textarea =  document.querySelector('textarea');
+   textarea.onkeyup = EnableButton;
+
+
+  function getLocation() {
+    console.log('here!')
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    }
+  }
+
+  function showPosition(position) {
+    x.value = position.coords.latitude + ";" + position.coords.longitude;
+  }
+
+  function showError(error) {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        x.innerHTML = "PERMISSION_DENIED"
+        break;
+      case error.POSITION_UNAVAILABLE:
+        x.innerHTML = "POSITION_UNAVAILABLE"
+        break;
+      case error.TIMEOUT:
+        x.innerHTML = "TIMEOUT"
+        break;
+      case error.UNKNOWN_ERROR:
+        x.innerHTML = "UNKNOWN_ERROR"
+        break;
+    }
+  }
+
+</script>
+{% endblock %}

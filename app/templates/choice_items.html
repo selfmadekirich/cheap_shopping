@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if items|length != 0 %}
+<div  style="padding: 50px;" class = "tile is-ancestor">
+  <div class = "tile is-7">
+
+<form  style="padding: 50px;" method="POST" action="/items/min">
+  <div class="column">
+      {%for item in items|sort %}
+      <div class="field has-text-left">
+        <label class="b-checkbox checkbox">
+          <input type="checkbox" onchange="AnyCheckboxSelected()" name="{{ item[1] }}">
+          <span class="check is-info"></span>
+          <span style="color: black;" class="control-label"> {{item[0]}}<span>
+        </label>
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+</div>
+    <div class="field">
+      <button class="button is-0-mobile is-info" id="btn" disabled>Выбрать товары</button>
+      </div>
+</form>
+<style>
+  .button is-info{
+    margin-bottom: 2%;
+  }
+  </style>
+
+<script>
+
+</script>
+  {% else %}
+<div class="content">
+  <p style="color: black;">
+    Извините, не можем найти введенные Вами товары.
+  </p>
+  <p  style="color: black;">
+    Попробуйте изменить запрос или попробуйте в другое время.
+  </p>
+  <p style="color: black;">
+    Возможно,все магазины в радиусе 3 км сейчас закрыты.
+  </p>
+
+  <button class="button is-0-mobile is-info">
+    <a href="/items" class="">Назад</a>
+  </button>
+</div>
+{% endif %}
+{% endblock %}

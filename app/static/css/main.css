@@ -1,0 +1,122 @@
+details {
+  font-size: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  position: relative;
+}
+details .summary-title {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+details:hover {
+  cursor: pointer;
+}
+details .summary-content {
+  border-top: 1px solid #e2e8f0;
+  cursor: default;
+  padding: 1em;
+  font-weight: 300;
+  line-height: 1.5;
+}
+details summary {
+  list-style: none;
+  padding: 1em;
+}
+details summary:focus {
+  outline: none;
+}
+details summary:hover .summary-chevron-up svg {
+  opacity: 1;
+}
+details .summary-chevron-up svg {
+  opacity: 0.5;
+}
+details .summary-chevron-up,
+details .summary-chevron-down {
+  pointer-events: none;
+  position: absolute;
+  top: 0.75em;
+  right: 1em;
+  background: #ffffff;
+}
+details .summary-chevron-up svg,
+details .summary-chevron-down svg {
+  display: block;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}/*# sourceMappingURL=main.css.map */
+
+
+a.navbar-item:hover{
+  border-color: lightgreen;
+  color: green;
+}
+
+a.navbar-item font:hover{
+  color: green;
+}
+
+.navbar-item add{
+  color: black;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: green;
+}
+
+.textarea{
+  border-radius: 15px;
+}
+
+.hero.is-primary a.navbar-item:hover {
+  background-color: white;
+  color: #fff;
+}
+
+.hero.is-primary .navbar-menu {
+  background-color: white
+}
+
+.hero.is-primary .title {
+  color: rgba(63,178,5,255);
+  font-size: 45px;
+}
+
+.hero.is-primary {
+   background-color:white; 
+   color: green;  
+}
+
+.hero.is-primary a.navbar-item{
+  color: black; 
+}
+
+
+a.navbar-item {
+  border-radius: 15px;
+  border-color: lightgrey;
+  border-style: solid;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+
+.hero.is-primary .title {
+  color: rgba(63,178,5,255);
+  font-size: 45px;
+}
+
+#main_container{
+  background-color: rgba(243,243,243,255);
+  border-radius: 35px;
+}
+
+.image img {
+  display: block;
+  height: 300px;
+  width: auto;
+}

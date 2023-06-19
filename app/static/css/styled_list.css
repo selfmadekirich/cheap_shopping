@@ -1,0 +1,51 @@
+#main_container {
+    background-color: white;
+    border-radius: 0px;
+}
+
+.card_id {
+    background-color: rgba(243, 243, 243, 255);
+    border-radius: 35px;
+    padding: 30px;
+}
+
+details .summary-chevron-up, details .summary-chevron-down {
+background: rgba(243, 243, 243, 255);
+padding-top: 15px;
+}
+
+
+.card-header {
+background-color: rgba(243, 243, 243, 255);
+border-radius: 50px;
+box-shadow: none;
+}
+
+.card {
+color: green;
+background-color: rgba(243, 243, 243, 255);
+border-radius: 50px;
+box-shadow: none;
+padding: 10px;
+}
+
+.button{
+border-radius: 50px;
+}
+
+.list {
+box-shadow: none;
+}
+
+.list-item:not(:last-child) {
+border-bottom: none;
+}
+
+.list-item {
+background-color: rgba(243, 243, 243, 255);
+}
+
+.summary-title{
+font-size: 1.3em;
+}
+

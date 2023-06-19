@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Flask Auth Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/choice_items.css')}}"/>
+    
+</head>
+
+<body>
+    <section class="hero is-primary is-fullheight">
+
+        <div class="hero-head is-responsive">
+            <nav class="navbar">
+                <div class="container">
+                    <a class="navbar-burger" id="burger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        </a>
+                    <div id="menu" class="navbar-menu">
+                        <div class="navbar-start">
+                            
+                            <a href="{{ url_for('items.index') }}" class="navbar-item add">
+                                <span>
+                                    <img  src = "{{ url_for('static', filename='images/discount.svg') }}" alt=""/>
+                                </span>
+                                <font color="black"> Скидка у дома </font>
+                                </a>
+
+                             <a href="{{ url_for('items.items') }}" class="navbar-item">
+                                <span>
+                                    <img src = "{{ url_for('static', filename='images/search.svg') }}" alt=""/>
+                                </span>
+                                <font color="black"> Искать товары </font>
+                                
+                             </a>
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('saved_items.cards') }}" class="navbar-item">
+                                <span>
+                                    <img src = "{{ url_for('static', filename='images/heart.svg') }}" alt=""/>
+                                </span>
+                                <font color="black"> Сохраненное </font>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="navbar-end" >
+                            {% if not current_user.is_authenticated %}
+                            <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                                <span>
+                                    <img src = "{{ url_for('static', filename='images/person-account.svg') }}" alt=""/>
+                                </span>
+                                <font color="black"> Вход </font>
+                               
+                            </a>
+                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                                <span>
+                                    <img src = "{{ url_for('static', filename='images/person_signup.svg') }}" alt=""/>
+                                </span>
+                                <font color="black"> Регистрация </font>
+                            </a>
+                            {% endif %}
+                            {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                                <span>
+                                    <img src = "{{ url_for('static', filename='images/log-out.svg') }}" alt=""/>
+                                </span>
+                                <font color="black"> Выйти </font>
+                            </a>
+                            {% endif %}
+                            
+                        </div>
+                </div>
+               
+            </nav>
+        </div>
+        <script src="{{url_for('static', filename='js/index.js')}}"></script>
+        <div class="hero-body">
+            <div class="container has-text-centered is-7" id="main_container">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+   
+</body>
+
+</html>

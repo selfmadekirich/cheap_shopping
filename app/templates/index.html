@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="columns" style="padding-top: 50px;padding-bottom: 50px;">
+  <div class="column">
+<h1 class="title">
+  Скидка у дома!
+</h1>
+<hr style="background-color: rgba(63,178,5,255);">
+<p style="color: black;">
+  Не знаете, где купить товары подешевле?
+</p>
+<p style="color: black;">
+  У вас мало времени и нет возможности сравнивать цены?
+</p>
+<p style="color: black;">
+  Тогда вы по адресу! С нами вы сможете найти магазины,где закупитесь по минимальной цене! 
+</p>
+  </div>
+<div class="column is-4">
+<figure class="image">
+  <img class="is-rounded" src="{{url_for('static', filename='images/trolley.png')}}">
+</div>
+</div>
+</div>
+{% endblock %}
