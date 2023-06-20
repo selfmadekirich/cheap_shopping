@@ -1,6 +1,7 @@
 ## Architecture
 
-![image](https://github.com/selfmadekirich/cheap_shopping/assets/37487158/4368356d-627e-48ff-8947-698c14150c65)
+![image](https://github.com/selfmadekirich/cheap_shopping/assets/37487158/4b0b2e36-db9a-4155-9684-75f0c38ebef9)
+
 
 This branch contains web app
 
